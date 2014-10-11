@@ -1,7 +1,8 @@
 .PHONY: clean
+EXECUTABLE = mergesort.bin
 
 all: clean
-	gcc -o mergesort.bin *.c
+	gcc -o $(EXECUTABLE) *.c
 
 clean:
-	-rm mergesort.bin
+	-rm $(EXECUTABLE)
