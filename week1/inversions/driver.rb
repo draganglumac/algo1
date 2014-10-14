@@ -13,27 +13,29 @@ end
 class Driver
   def run
     a = []
-    File.open('IntegerArray.txt', 'r').each { |line| a << line.to_i }
+    # File.open('IntegerArray.txt', 'r').each { |line| a << line.to_i }
+    File.open('IntegerArraySmall.txt', 'r').each { |line| a << line.to_i }
 
-    sorted = Mergesort.new.sort a
+    sorted, inversions = Mergesort.new.sort a, 0
 
-    (0..99998).each do |i|
+    (0..(sorted.size - 2)).each do |i|
       if sorted[i] > sorted[i+1]
         raise Exception.new("Barf! In position #{i} you have #{sorted[i]} before #{sorted[i+1]}.")
       end
     end
 
-    pretty_print sorted
+    pretty_print sorted, inversions
   end
 
-  def pretty_print(a)
+  def pretty_print(a, inversions)
     puts 'Stats:'
+    puts '--------------------'
+    printf "%s: %13s\n", 'First', a.first
+    printf "%s: %12s\n", 'Middle', a.middle
+    printf "%s: %14s\n", 'Last', a.last
+    printf "%s: %14s\n", 'Size', a.size
     puts '---------------'
-    printf "%s: %8s\n", 'First', a.first
-    printf "%s: %7s\n", 'Middle', a.middle
-    printf "%s: %9s\n", 'Last', a.last
-    puts '---------------'
-    printf "%s: %9s\n", 'Size', a.size
+    printf "%s: %8s\n", 'Inversions', inversions
   end
 
 end
