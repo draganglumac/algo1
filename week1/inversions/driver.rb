@@ -2,7 +2,7 @@ require 'pry'
 require 'pry-nav'
 
 $: << '.'
-require 'mergesort'
+require 'inversion_counter'
 
 class Array
   def middle
@@ -13,10 +13,10 @@ end
 class Driver
   def run
     a = []
-    # File.open('IntegerArray.txt', 'r').each { |line| a << line.to_i }
-    File.open('IntegerArraySmall.txt', 'r').each { |line| a << line.to_i }
+    File.open('IntegerArray.txt', 'r').each { |line| a << line.to_i }
+    # File.open('IntegerArraySmall.txt', 'r').each { |line| a << line.to_i }
 
-    sorted, inversions = Mergesort.new.sort a, 0
+    sorted, inversions = InversionCounter.new.sort_and_count a, 0
 
     (0..(sorted.size - 2)).each do |i|
       if sorted[i] > sorted[i+1]
@@ -41,3 +41,6 @@ class Driver
 end
 
 Driver.new.run
+
+# First submission 14/10/2014  19:50 -> 2499690537
+# Second submission 14/10/2014 20:06 -> 2407905288 - correct
