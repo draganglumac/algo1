@@ -20,7 +20,7 @@ class Quicksort
   end
 
   def partition(array, first, last)
-    p = choose_index_of_pivot(first, last)
+    p = choose_index_of_pivot(array, first, last)
     swap(array, first, p) unless p == first
 
     i = j = first + 1
@@ -37,9 +37,47 @@ class Quicksort
     pivot_place
   end
 
-  def choose_index_of_pivot(first, last)
+  def choose_index_of_pivot(array, first, last)
+    choose_random_index(first, last)
+    # choose_first_index(first, last)
+    # choose_last_index(first, last)
+    # choose_median_of_three(array, first, last)
+  end
+
+  def choose_random_index(first, last)
     if last - first > 1
       first + Random.rand(last - first)
+    else
+      first
+    end
+  end
+
+  def choose_first_index(first, last)
+    first
+  end
+
+  def choose_last_index(first, last)
+    last
+  end
+
+  def choose_median_of_three(first, last)
+    if (last - first) > 1
+      smallest = largest = first
+
+      if array[last] > array[first]
+        largest = last
+      else
+        largest = first
+      end
+
+      midpoint = (last - first) / 2
+      if array[smallest] > array[midpoint]
+        smallest
+      elsif array[largest] < array[midpoint]
+        largest
+      else
+        midpoint
+      end
     else
       first
     end

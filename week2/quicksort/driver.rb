@@ -13,8 +13,9 @@ end
 class Driver
   def run
     a = []
-    File.open('IntegerArray.txt', 'r').each { |line| a << line.to_i }
+    # File.open('IntegerArray.txt', 'r').each { |line| a << line.to_i }
     # File.open('IntegerArraySmall.txt', 'r').each { |line| a << line.to_i }
+    File.open('QuickSort.txt', 'r').each { |line| a << line.to_i }
 
     sorted = Quicksort.new.sort a
 
