@@ -60,7 +60,7 @@ class Quicksort
     last
   end
 
-  def choose_median_of_three(first, last)
+  def choose_median_of_three(array, first, last)
     if (last - first) > 1
       smallest = largest = first
 
@@ -70,7 +70,7 @@ class Quicksort
         largest = first
       end
 
-      midpoint = (last - first) / 2
+      midpoint = first + (last - first) / 2
       if array[smallest] > array[midpoint]
         smallest
       elsif array[largest] < array[midpoint]
