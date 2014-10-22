@@ -17,7 +17,7 @@ class Driver
     # File.open('IntegerArraySmall.txt', 'r').each { |line| a << line.to_i }
     File.open('QuickSort.txt', 'r').each { |line| a << line.to_i }
 
-    sorted = Quicksort.new.sort a
+    sorted, comparisons = Quicksort.new.sort a
 
     raise Exception.new('Sorted array is a different object to the original array!') unless a == sorted
     (0..(sorted.size - 2)).each do |i|
@@ -26,10 +26,10 @@ class Driver
       end
     end
 
-    pretty_print sorted
+    pretty_print sorted, comparisons
   end
 
-  def pretty_print(a)
+  def pretty_print(a, comparisons)
     puts 'Stats:'
     puts '--------------------'
     printf "%s: %13s\n", 'First', a.first
@@ -37,6 +37,8 @@ class Driver
     printf "%s: %14s\n", 'Last', a.last
     puts '--------------------'
     printf "%s: %14s\n", 'Size', a.size
+    puts '--------------------'
+    printf "%s: %7s\n", 'Comparisons', comparisons
   end
 
 end

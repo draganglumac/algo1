@@ -1,22 +1,25 @@
 class Quicksort
 
   def sort(array)
+    comparisons = 0
     unless array.nil? or array.empty?
       first = 0
       last = array.size - 1
-      quicksort(array, first, last)
+      comparisons = quicksort(array, first, last, 0)
     end
-    array
+    [array, comparisons]
   end
 
   private
 
-  def quicksort(array, left, right)
+  def quicksort(array, left, right, comparisons)
     if right > left
       split_index = partition(array, left, right)
-      quicksort(array, left, split_index - 1)
-      quicksort(array, split_index + 1, right)
+      comparisons += (right - left)
+      comparisons = quicksort(array, left, split_index - 1, comparisons)
+      comparisons = quicksort(array, split_index + 1, right, comparisons)
     end
+    comparisons
   end
 
   def partition(array, first, last)
@@ -38,10 +41,10 @@ class Quicksort
   end
 
   def choose_index_of_pivot(array, first, last)
-    choose_random_index(first, last)
+    # choose_random_index(first, last)
     # choose_first_index(first, last)
     # choose_last_index(first, last)
-    # choose_median_of_three(array, first, last)
+    choose_median_of_three(array, first, last)
   end
 
   def choose_random_index(first, last)
