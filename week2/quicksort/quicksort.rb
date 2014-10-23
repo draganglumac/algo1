@@ -63,24 +63,33 @@ class Quicksort
     last
   end
 
+  def calculate_midpoint(first, last)
+    size = last - first + 1
+    if size % 2 == 0
+      first + size/2 - 1
+    else
+      first + size/2
+    end
+  end
+
   def choose_median_of_three(array, first, last)
-    if (last - first) > 1
-      smallest = largest = first
+    if last - first > 1
+      smallest = median = first
+      midpoint = calculate_midpoint(first, last)
 
-      if array[last] > array[first]
-        largest = last
+      if array[first] < array[midpoint]
+        median = midpoint
       else
-        largest = first
+        smallest = midpoint
       end
 
-      midpoint = first + (last - first) / 2
-      if array[smallest] > array[midpoint]
-        smallest
-      elsif array[largest] < array[midpoint]
-        largest
-      else
-        midpoint
+      if array[last] < array[smallest]
+        median = smallest
+      elsif array[last] < array[median]
+        median = last
       end
+
+      median
     else
       first
     end

@@ -16,6 +16,11 @@ class Driver
     # File.open('IntegerArray.txt', 'r').each { |line| a << line.to_i }
     # File.open('IntegerArraySmall.txt', 'r').each { |line| a << line.to_i }
     File.open('QuickSort.txt', 'r').each { |line| a << line.to_i }
+    # File.open('10.txt', 'r').each { |line| a << line.to_i }
+    # File.open('100.txt', 'r').each { |line| a << line.to_i }
+    # File.open('1000.txt', 'r').each { |line| a << line.to_i }
+    # File.open('QuickSort100.txt', 'r').each { |line| a << line.to_i }
+    # File.open('QuickSort1000.txt', 'r').each { |line| a << line.to_i }
 
     sorted, comparisons = Quicksort.new.sort a
 

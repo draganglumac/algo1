@@ -1,0 +1,20 @@
+Results with Various Choices
+----------------------------
+
+  First as default: 148815 
+   Last as default: 148815
+     Last >= First: 148815
+Middle >= Smallest: 148815
+ Middle <= Largest: 148815
+Both >= and <= ifs: 148815
+
+Median = first + (last - first + 1) / 2: 143037
+
+Test Cases
+----------
+
+Answers are:
+size   first      last      median
+10        25        29          21
+100      615       587         518
+1000   10297     10184        8921
