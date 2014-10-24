@@ -49,6 +49,3 @@ class Driver
 end
 
 Driver.new.run
-
-# First submission 14/10/2014  19:50 -> 2499690537
-# Second submission 14/10/2014 20:06 -> 2407905288 - correct
