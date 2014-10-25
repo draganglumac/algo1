@@ -17,9 +17,13 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 
 #include "quicksort.h"
+
+char *filename = 0;
+pivot_strategy ps = FIRST;
 
 void assert_array_sorted(int *array, int size) {
 	int i;
@@ -62,17 +66,47 @@ int array_from_file(int **array, char *filename) {
 	fclose(f);
 	return next_index;
 }
-int main() {
+void print_usage() {
+	printf("Usage:\n");
+	printf("\tquick.bin -f filename [-p first | last | median | random]\n\n");
+}
+void set_pivot_strategy(char *strategy) {
+	if (strcmp(strategy, "last") == 0) {
+		ps = LAST;
+	}
+	else if (strcmp(strategy, "median") == 0) {
+		ps = MEDIAN;
+	}
+	else if (strcmp(strategy, "random") == 0) {
+		ps = RANDOM;
+	}
+	else {
+		ps = FIRST;
+	}
+}
+void process_command_line_args(int argc, char **argv) {
+	if (argc < 2 || argc % 2 == 0) {
+		print_usage();
+		exit(1);
+	}
+	int i;
+	for (i = 1; i < argc; i += 2) {
+		if (strcmp(argv[i], "-f") == 0) {
+			filename = argv[i+1];
+		}
+		else if (strcmp(argv[i], "-p") == 0) {
+			set_pivot_strategy(argv[i+1]);
+		}
+		else {
+			print_usage();
+			exit(1);
+		}
+	}	
+}
+int main(int argc, char **argv) {
+	process_command_line_args(argc, argv);
 	int *array;
-	int size = 0;
-//	size = array_from_file(&array, "IntegerArray.txt");
-//	size = array_from_file(&array, "IntegerArraySmall.txt");
-	size = array_from_file(&array, "QuickSort.txt");
-//	size = array_from_file(&array, "10.txt");
-//	size = array_from_file(&array, "100.txt");
-//	size = array_from_file(&array, "1000.txt");
-//	size = array_from_file(&array, "QuickSort100.txt");
-//	size = array_from_file(&array, "QuickSort1000.txt");
+	int size = array_from_file(&array, filename); 
 	int comparisons = 0;
 	quicksort(array, size, &comparisons);
 	assert_array_sorted(array, size);

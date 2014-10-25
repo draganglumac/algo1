@@ -19,6 +19,8 @@
 #ifndef __QUICKSORT_H__
 #define __QUICKSORT_H__
 
+typedef enum { FIRST, LAST, MEDIAN, RANDOM } pivot_strategy;
+
 void quicksort(int *a, int size, int *comparisons);
 
 #endif // __QUICKSORT_H__

@@ -20,6 +20,8 @@
 #include <time.h>
 #include "quicksort.h"
 
+extern pivot_strategy ps;
+
 void kwiksort(int *array, int first, int last, int *comparisons); 
 int choose_pivot(int *array, int first, int last);
 void swap(int *array, int i, int j);
@@ -86,10 +88,18 @@ int choose_random(int *array, int first, int last) {
 	return pivot;
 }
 int choose_pivot(int *array, int first, int last) {
-//	return choose_first(array, first, last);
-//	return choose_last(array, first, last);
-	return choose_median_of_three(array, first, last);
-//	return choose_random(array, first, last);
+	if (ps == LAST) {
+		return choose_last(array, first, last);
+	}
+	else if (ps == MEDIAN) {
+		return choose_median_of_three(array, first, last);
+	}
+	else if (ps == RANDOM) {
+		return choose_random(array, first, last);
+	}
+	else {
+		return choose_first(array, first, last);
+	}
 }
 void swap(int *array, int i, int j) {
 	if (i != j) {
