@@ -37,13 +37,13 @@ class Driver
   def pretty_print(a, comparisons)
     puts 'Stats:'
     puts '--------------------'
-    printf "%s: %13s\n", 'First', a.first
-    printf "%s: %12s\n", 'Middle', a.middle
-    printf "%s: %14s\n", 'Last', a.last
+    printf "%s: %13d\n", 'First', a.first
+    printf "%s: %12d\n", 'Middle', a.middle
+    printf "%s: %14d\n", 'Last', a.last
     puts '--------------------'
-    printf "%s: %14s\n", 'Size', a.size
+    printf "%s: %14d\n", 'Size', a.size
     puts '--------------------'
-    printf "%s: %7s\n", 'Comparisons', comparisons
+    printf "%s: %7d\n", 'Comparisons', comparisons
   end
 
 end

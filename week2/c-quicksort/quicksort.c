@@ -20,24 +20,25 @@
 #include <time.h>
 #include "quicksort.h"
 
-void kwiksort(int *array, int first, int last); 
+void kwiksort(int *array, int first, int last, int *comparisons); 
 int choose_pivot(int *array, int first, int last);
 void swap(int *array, int i, int j);
 int partition(int *array, int first, int last);
 
-void quicksort(int *array, int size) {
+void quicksort(int *array, int size, int *comparisons) {
 	if (array == 0 || size <= 0) {
 		return;
 	}
-	kwiksort(array, 0, size - 1);
+	kwiksort(array, 0, size - 1, comparisons);
 }
-void kwiksort(int *array, int first, int last) {
+void kwiksort(int *array, int first, int last, int *comparisons) {
 	if (first >= last) {
 		return;
 	}
 	int pivot = partition(array, first, last);
-	kwiksort(array, first, pivot - 1);
-	kwiksort(array, pivot + 1, last);
+	*comparisons += (last - first);
+	kwiksort(array, first, pivot - 1, comparisons);
+	kwiksort(array, pivot + 1, last, comparisons);
 }
 int choose_first(int *array, int first, int last) {
 	return first;
@@ -87,8 +88,8 @@ int choose_random(int *array, int first, int last) {
 int choose_pivot(int *array, int first, int last) {
 //	return choose_first(array, first, last);
 //	return choose_last(array, first, last);
-//	return choose_median_of_three(array, first, last);
-	return choose_random(array, first, last);
+	return choose_median_of_three(array, first, last);
+//	return choose_random(array, first, last);
 }
 void swap(int *array, int i, int j) {
 	if (i != j) {

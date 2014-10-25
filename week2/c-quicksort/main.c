@@ -27,7 +27,7 @@ void assert_array_sorted(int *array, int size) {
 		assert(array[i] <= array[i + 1]);
 	}
 }
-void pretty_print(int *a, int size) {
+void pretty_print(int *a, int size, int comparisons) {
     printf("Stats:\n");
     printf("--------------------\n");
     printf("%s: %13d\n", "First", a[0]);
@@ -35,6 +35,8 @@ void pretty_print(int *a, int size) {
     printf("%s: %14d\n", "Last", a[size - 1]);
     printf("--------------------\n");
     printf("%s: %14d\n", "Size", size);
+    printf("--------------------\n");
+	printf("%s: %7d\n", "Comparisons", comparisons);
 }
 int determine_size(char *filename) {
 	char line[16];
@@ -71,8 +73,9 @@ int main() {
 //	size = array_from_file(&array, "1000.txt");
 //	size = array_from_file(&array, "QuickSort100.txt");
 //	size = array_from_file(&array, "QuickSort1000.txt");
-	quicksort(array, size);
+	int comparisons = 0;
+	quicksort(array, size, &comparisons);
 	assert_array_sorted(array, size);
-	pretty_print(array, size);
+	pretty_print(array, size, comparisons);
 	return 0;
 }

@@ -19,6 +19,6 @@
 #ifndef __QUICKSORT_H__
 #define __QUICKSORT_H__
 
-void quicksort(int *a, int size);
+void quicksort(int *a, int size, int *comparisons);
 
 #endif // __QUICKSORT_H__
