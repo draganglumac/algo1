@@ -19,8 +19,6 @@
 #ifndef __QUICKSORT_H__
 #define __QUICKSORT_H__
 
-typedef enum { FIRST, LAST, MEDIAN, RANDOM } pivot_strategy;
-
-void rselect(int *a, int size, int *comparisons);
+int rselect(int *a, int size, int order);
 
 #endif // __QUICKSORT_H__

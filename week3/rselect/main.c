@@ -23,24 +23,14 @@
 #include "rselect.h"
 
 char *filename = 0;
-pivot_strategy ps = FIRST;
+int order = 0;
 
-void assert_array_sorted(int *array, int size) {
-	int i;
-	for (i = 0; i < size-2; i++) {
-		assert(array[i] <= array[i + 1]);
-	}
+void assert_ith_order_statistic(int statistic, int i, int array_size) {
+	assert(statistic <= array_size);
+	assert(statistic == i);
 }
-void pretty_print(int *a, int size, int comparisons) {
-    printf("Stats:\n");
-    printf("--------------------\n");
-    printf("%s: %13d\n", "First", a[0]);
-    printf("%s: %12d\n", "Middle", a[size/2 - 1]);
-    printf("%s: %14d\n", "Last", a[size - 1]);
-    printf("--------------------\n");
-    printf("%s: %14d\n", "Size", size);
-    printf("--------------------\n");
-	printf("%s: %7d\n", "Comparisons", comparisons);
+void pretty_print(int i, int statistic) {
+    printf("%d. order statistic = %d\n", i, statistic);
 }
 int determine_size(char *filename) {
 	char line[16];
@@ -68,21 +58,7 @@ int array_from_file(int **array, char *filename) {
 }
 void print_usage() {
 	printf("Usage:\n");
-	printf("\tquick.bin -f filename [-p first | last | median | random]\n\n");
-}
-void set_pivot_strategy(char *strategy) {
-	if (strcmp(strategy, "last") == 0) {
-		ps = LAST;
-	}
-	else if (strcmp(strategy, "median") == 0) {
-		ps = MEDIAN;
-	}
-	else if (strcmp(strategy, "random") == 0) {
-		ps = RANDOM;
-	}
-	else {
-		ps = FIRST;
-	}
+	printf("\trselect.bin -f filename -i order\n\n");
 }
 void process_command_line_args(int argc, char **argv) {
 	if (argc < 2 || argc % 2 == 0) {
@@ -94,8 +70,8 @@ void process_command_line_args(int argc, char **argv) {
 		if (strcmp(argv[i], "-f") == 0) {
 			filename = argv[i+1];
 		}
-		else if (strcmp(argv[i], "-p") == 0) {
-			set_pivot_strategy(argv[i+1]);
+		else if (strcmp(argv[i], "-i") == 0) {
+			order = atoi((argv[i+1]));
 		}
 		else {
 			print_usage();
@@ -108,8 +84,8 @@ int main(int argc, char **argv) {
 	int *array;
 	int size = array_from_file(&array, filename); 
 	int comparisons = 0;
-	rselect(array, size, &comparisons);
-	assert_array_sorted(array, size);
-	pretty_print(array, size, comparisons);
+	int statistic = rselect(array, size, order);
+	assert_ith_order_statistic(statistic, order, size);
+	pretty_print(order, statistic);
 	return 0;
 }
