@@ -6,7 +6,7 @@ class Graph
   def self.load(filename)
     graph = []
     File.open(filename, 'r').each do |line|
-      graph << line.strip.split(' ').map { |el| el.to_i } unless line.empty?
+      graph << (line.strip.split(' ').map { |el| el.to_i }).sort unless line.empty?
     end
     Graph.new graph.map { |e| e[1..-1] }
   end
