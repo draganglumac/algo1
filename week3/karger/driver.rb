@@ -10,14 +10,12 @@ class Driver
   def run
     min_cut = MinCut.new
     graph = Graph.load('kargerMinCut.txt')
-    puts graph
     min_cut.compute_cut(graph)
-
-    pretty_print
+    pretty_print(graph)
   end
 
-  def pretty_print
-    puts 'ToDo'
+  def pretty_print(graph)
+    puts graph
   end
 
 end

@@ -1,21 +1,22 @@
 class Graph
 
   def initialize(raw_data)
-    @raw = raw_data
+    @graph = raw_data
   end
 
   def self.load(filename)
-    raw_data = []
+    graph = []
     File.open(filename, 'r').each do |line|
-      raw_data << line.strip.split(' ')
+      graph << line.strip.split(' ').map { |el| el.to_i } unless line.empty?
     end
-    Graph.new(raw_data)
+    Graph.new graph.map { |e| e[1..-1] }
   end
 
   def to_s
     s = ''
-    @raw.each do |el|
-      s += "#{el.to_s}\n"
+    @graph.each do |el|
+      el.each { |e| s += '%3d ' % e }
+      s[-1] = "\n"
     end
     s
   end
