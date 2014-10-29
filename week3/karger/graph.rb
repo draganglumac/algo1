@@ -1,5 +1,4 @@
 class Graph
-
   def initialize(raw_data)
     @graph = raw_data
   end
