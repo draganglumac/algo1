@@ -1,14 +1,22 @@
 class Graph
-  def initialize(raw_data)
-    @graph = [] + raw_data
+  attr_accessor :num_nodes
+
+  def initialize
+    @graph = []
+    @num_nodes = 0
   end
 
-  def self.load(filename)
-    graph = []
+  def adj_list
+    @graph
+  end
+
+  def load(filename)
     File.open(filename, 'r').each do |line|
-      graph << line.strip.split(' ').map { |el| el.to_i } unless line.empty?
+      unless line.empty?
+        list = line.strip.split(' ').map { |el| el.to_i }
+        @graph << list[1..-1].sort!
+      end
     end
-    Graph.new graph.map { |e| e[1..-1].sort! }
   end
 
   def to_s
