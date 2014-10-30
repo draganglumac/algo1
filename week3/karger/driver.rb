@@ -4,7 +4,7 @@ require 'pry-nav'
 $: << '.'
 
 require 'graph'
-require 'karger'
+require 'min_cut'
 
 class Driver
   def run
