@@ -16,6 +16,10 @@ class Graph
     nodes
   end
 
+  def edges_for_node(n)
+    @graph[n]
+  end
+
   def load(filename)
     File.open(filename, 'r').each do |line|
       unless line.empty?

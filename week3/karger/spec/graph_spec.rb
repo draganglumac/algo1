@@ -59,4 +59,14 @@ describe 'Graph behaviour' do
     graph.contract_edge(1, 3)
     expect(graph.nodes).to eq([2, 3, 5, 6, 7, 8])
   end
+
+  it 'should return edges for node' do
+    expect(graph.edges_for_node 0).to be_nil
+    expect(graph.edges_for_node 1).to eq([2, 3, 4, 7])
+    expect(graph.edges_for_node 19).to be_nil
+
+    graph.contract_edge(4, 1)
+    expect(graph.edges_for_node 1).to eq([2, 2, 3, 3, 5, 7])
+    expect(graph.edges_for_node 4).to be_nil
+  end
 end
