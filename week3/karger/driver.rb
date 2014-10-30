@@ -12,6 +12,7 @@ class Driver
     graph = Graph.new
     # graph.load('kargerMinCut.txt')
     graph.load('2cut.txt')
+    graph.contract_edge(4, 1)
     cut = min_cut.compute_cut(graph)
     pretty_print(graph, cut)
   end

@@ -1,13 +1,19 @@
-class Graph
-  attr_accessor :num_nodes
+class InvalidEdgeException < Exception
+end
 
+class Graph
   def initialize
     @graph = [nil]
-    @num_nodes = 0
   end
 
   def adj_list
     @graph
+  end
+
+  def nodes
+    nodes = []
+    (1...@graph.size).each { |i| nodes << i unless @graph[i].nil? }
+    nodes
   end
 
   def load(filename)
@@ -30,7 +36,19 @@ class Graph
     s
   end
 
+  def valid_node(v)
+    v > 0 and v < @graph.size and (not @graph[v].nil?)
+  end
+
+  def valid_edge(v1, v2)
+    valid_node v1 and valid_node v2 and @graph[v1].member?(v2)
+  end
+
   def contract_edge(v1, v2)
+    unless valid_edge v1, v2
+      raise InvalidEdgeException.new "Invalid edge (#{v1}, #{v2})"
+    end
+
     v1_list = @graph[v1]
     @graph[v1] = nil
     replace_in_graph(v1, v2)

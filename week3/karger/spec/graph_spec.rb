@@ -3,12 +3,14 @@ $: << '..'
 
 require 'rspec'
 require 'graph'
+require 'pry'
+require 'pry-nav'
 
 describe 'Graph behaviour' do
 
   let(:graph) { Graph.new }
   before(:each) { graph.load('2cut.txt') }
-  # --1
+
   it 'should load a graph from a file into a list of adjacency lists' do
     expected = [
         nil,
@@ -23,7 +25,7 @@ describe 'Graph behaviour' do
     ]
     expect(graph.adj_list).to eq(expected)
   end
-  # --2
+
   it 'should contract an edge 1, 4 correctly' do
     expected = [
         nil,
@@ -38,5 +40,23 @@ describe 'Graph behaviour' do
     ]
     graph.contract_edge(1, 4)
     expect(graph.adj_list).to eq(expected)
+  end
+
+  it 'should raise InvalidEdgeException if an attempt is made to contract a non-existant edge' do
+    expect { graph.contract_edge(0, 7) }.to raise_exception(InvalidEdgeException)
+    expect { graph.contract_edge(1, 8) }.to raise_exception(InvalidEdgeException)
+
+    graph.contract_edge(1, 4)
+    expect { graph.contract_edge(3, 1) }.to raise_exception(InvalidEdgeException)
+  end
+
+  it 'should return a list of nodes ignoring nil nodes' do
+    expect(graph.nodes).to eq([1, 2, 3, 4, 5, 6, 7, 8])
+
+    graph.contract_edge(4, 1)
+    expect(graph.nodes).to eq([1, 2, 3, 5, 6, 7, 8])
+
+    graph.contract_edge(1, 3)
+    expect(graph.nodes).to eq([2, 3, 5, 6, 7, 8])
   end
 end
