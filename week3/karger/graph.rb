@@ -2,36 +2,40 @@ class InvalidEdgeException < Exception
 end
 
 class Graph
+  attr_accessor :adj_list
+
   def initialize
-    @graph = [nil]
+    @adj_list = [nil]
   end
 
-  def adj_list
-    @graph
+  def clone
+    g = Graph.new
+    g.adj_list = @adj_list.clone
+    g
   end
 
   def nodes
     nodes = []
-    (1...@graph.size).each { |i| nodes << i unless @graph[i].nil? }
+    (1...@adj_list.size).each { |i| nodes << i unless @adj_list[i].nil? }
     nodes
   end
 
   def edges_for_node(n)
-    @graph[n]
+    @adj_list[n]
   end
 
   def load(filename)
     File.open(filename, 'r').each do |line|
       unless line.empty?
         list = line.strip.split(' ').map { |el| el.to_i }
-        @graph << list[1..-1].sort!
+        @adj_list << list[1..-1].sort!
       end
     end
   end
 
   def to_s
     s = ''
-    @graph.each do |el|
+    @adj_list.each do |el|
       unless el.nil?
         el.each { |e| s += '%3d ' % e }
         s[-1] = "\n"
@@ -41,11 +45,11 @@ class Graph
   end
 
   def valid_node(v)
-    v > 0 and v < @graph.size and (not @graph[v].nil?)
+    v > 0 and v < @adj_list.size and (not @adj_list[v].nil?)
   end
 
   def valid_edge(v1, v2)
-    valid_node v1 and valid_node v2 and @graph[v1].member?(v2)
+    valid_node v1 and valid_node v2 and @adj_list[v1].member?(v2)
   end
 
   def contract_edge(v1, v2)
@@ -53,15 +57,15 @@ class Graph
       raise InvalidEdgeException.new "Invalid edge (#{v1}, #{v2})"
     end
 
-    v1_list = @graph[v1]
-    @graph[v1] = nil
+    v1_list = @adj_list[v1]
+    @adj_list[v1] = nil
     replace_in_graph(v1, v2)
-    v2_list = merge_lists_omitting(v1_list, @graph[v2], v2)
-    @graph[v2] = v2_list.sort!
+    v2_list = merge_lists_omitting(v1_list, @adj_list[v2], v2)
+    @adj_list[v2] = v2_list.sort!
   end
 
   def replace_in_graph(v1, v2)
-    @graph.each do |vl|
+    @adj_list.each do |vl|
       unless vl.nil?
         i = vl.find_index(v1)
         until i.nil?

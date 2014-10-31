@@ -5,6 +5,14 @@ require 'rspec'
 require 'graph'
 require 'min_cut'
 
+def compute_cut(graph)
+  g = min_cut.compute_cut(graph)
+
+  ns = g.nodes
+  expect(g.nodes.size).to eq(2)
+  expect(g.edges_for_node(ns[0]).size).to eq(g.edges_for_node(ns[1]).size)
+end
+
 describe 'MinCut' do
 
   let(:min_cut) { MinCut.new }
@@ -28,10 +36,10 @@ describe 'MinCut' do
   end
 
   it 'should only have 2 nodes left after computing a cut' do
-    min_cut.compute_cut(graph)
+    compute_cut graph
+  end
 
-    ns = graph.nodes
-    expect(graph.nodes.size).to eq(2)
-    expect(graph.edges_for_node(ns[0]).size).to eq(graph.edges_for_node(ns[1]).size)
+  it 'should be able to repeatedly compute cuts' do
+    (0..10).each { compute_cut graph }
   end
 end

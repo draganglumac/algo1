@@ -5,11 +5,13 @@ class MinCut
     [node, link]
   end
 
-  def compute_cut(graph)
+  def compute_cut(g)
+    graph = g.clone
     while graph.nodes.size > 2
       v1, v2 = pick_edge(graph)
       graph.contract_edge v1, v2
     end
+    graph
   end
 
 end
