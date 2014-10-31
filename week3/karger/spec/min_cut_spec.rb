@@ -26,4 +26,12 @@ describe 'MinCut' do
     expect(graph.nodes).to include(e[0])
     expect(graph.edges_for_node(e[0])).to include(e[1])
   end
+
+  it 'should only have 2 nodes left after computing a cut' do
+    min_cut.compute_cut(graph)
+
+    ns = graph.nodes
+    expect(graph.nodes.size).to eq(2)
+    expect(graph.edges_for_node(ns[0]).size).to eq(graph.edges_for_node(ns[1]).size)
+  end
 end

@@ -6,7 +6,10 @@ class MinCut
   end
 
   def compute_cut(graph)
-    nil
+    while graph.nodes.size > 2
+      v1, v2 = pick_edge(graph)
+      graph.contract_edge v1, v2
+    end
   end
 
 end
