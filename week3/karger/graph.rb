@@ -10,7 +10,15 @@ class Graph
 
   def clone
     g = Graph.new
-    g.adj_list = @adj_list.clone
+    new_list = []
+    @adj_list.each do |el|
+      if el.nil?
+        new_list << nil
+      else
+        new_list << el.clone
+      end
+    end
+    g.adj_list = new_list
     g
   end
 

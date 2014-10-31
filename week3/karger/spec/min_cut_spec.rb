@@ -39,7 +39,7 @@ describe 'MinCut' do
     compute_cut graph
   end
 
-  # it 'should be able to repeatedly compute cuts' do
-  #   (0..10).each { compute_cut graph }
-  # end
+  it 'should be able to repeatedly compute cuts' do
+    (0..10).each { compute_cut graph }
+  end
 end
