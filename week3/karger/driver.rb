@@ -21,10 +21,10 @@ class Driver
 
     cut = min_cut.compute_cut(graph)
     update_min_cut_size(cut)
-    (0..num_tries).each do
-      cut = min_cut.compute_cut(graph)
-      update_min_cut_size(cut)
-    end
+    # (0..num_tries).each do
+    #   cut = min_cut.compute_cut(graph)
+    #   update_min_cut_size(cut)
+    # end
 
     pretty_print(cut, @min_cut_size)
   end

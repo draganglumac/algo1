@@ -35,11 +35,14 @@ class Graph
 
   def to_s
     s = ''
+    i = 0
     @adj_list.each do |el|
       unless el.nil?
+        s += '%3d -> ' % i
         el.each { |e| s += '%3d ' % e }
         s[-1] = "\n"
       end
+      i += 1
     end
     s
   end
