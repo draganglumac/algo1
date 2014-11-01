@@ -11,11 +11,19 @@ class Driver
     min_cut = MinCut.new
     graph = Graph.new
 
-    # graph.load('kargerMinCut.txt')
-    graph.load('2cut.txt')
+    graph.load('kargerMinCut.txt')
+    # graph.load('2cut.txt')
+    # graph.load('2permuted.txt')
+    # graph.load('1cut.txt')
+    # graph.load('1permuted.txt')
+    # graph.load('3cut.txt')
+    # graph.load('3cut-small.txt')
 
     n = graph.nodes.size
-    num_tries = (n**2 * Math.log2(n)).to_i - 1
+    # num_tries = (n**2 * Math.log2(n)).to_i - 1
+    # num_tries = n**2
+    num_tries = n
+
     puts "num_tries = #{num_tries}"
     puts ''
 
