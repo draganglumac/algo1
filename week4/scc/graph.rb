@@ -25,7 +25,17 @@ class Graph
   def prepare_for_reversal
     @adj_list.each do |list|
       unless list.nil?
+        list.delete(list.first) if list.first.nil?
         list << nil unless list.last.nil?
+      end
+    end
+  end
+
+  def clean_up_after_reversal
+    @adj_list.each do |list|
+      unless list.nil?
+        list.delete(list.first) if list.first.nil?
+        list.delete(list.last)  if list.last.nil?
       end
     end
   end

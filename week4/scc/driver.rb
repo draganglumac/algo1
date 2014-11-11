@@ -11,9 +11,9 @@ class Driver
     scc = SCC.new
     graph = Graph.new
 
-    # graph.load('small.txt')
-    graph.load('test.txt')
-    # graph.load('SCC.txt')
+    # graph.load('test/small.txt')
+    graph.load('test/test.txt')
+    # graph.load('test/SCC.txt')
 
     edges = 0
     graph.nodes.each do |node|

@@ -2,13 +2,12 @@ require 'stack'
 require 'set'
 
 class SCC
-  attr_reader :time
-  attr_reader :finishing_times
+  attr_reader :ftimes
 
   def initialize
-    @time = 0
+    @ftime = 0
     @visited = {}
-    @finishing_times = {}
+    @ftimes = {}
     @strong_components = []
   end
 
@@ -20,37 +19,42 @@ class SCC
   def compute_finishing_times(graph)
     graph.prepare_for_reversal
     graph.nodes.each { |node| dfs_visit(graph, node) }
+    @ftime = 0
   end
 
   def compute_strong_components(graph)
     graph.prepare_for_reversal
-    nodes_ft = nodes_in_decreasing_finishing_time
+    nodes_ft = nodes_by_ftimes_desc
     nodes_ft.each { |node| dfs_visit(graph, node) }
+    @ftimes = {}
   end
 
-  def nodes_in_decreasing_finishing_time
-    descending_ftimes = @finishing_times.keys.sort.reverse
+  def nodes_by_ftimes_desc
+    descending_ftimes = @ftimes.keys.sort.reverse
     nodes_ft = []
-    descending_ftimes.each { |k| nodes_ft << @finishing_times[k] }
+    descending_ftimes.each { |k| nodes_ft << @ftimes[k] }
     nodes_ft
   end
-  
-  private
+
   def dfs_visit(graph, node)
     @visited[node] = true
-    @time += 1
     e = pluck_and_reverse_first_edge(graph, node)
     until e.nil?
       dfs_visit(graph, e) unless @visited[e]
       e = pluck_and_reverse_first_edge(graph, node)
     end
-    @finishing_times[@time] = node
+    @ftime += 1
+    @ftimes[node] = @ftime
   end
 
   def pluck_and_reverse_first_edge(graph, node)
     edges = graph.edges_for_node node
-    e = edges.remove(edges.first)
-    graph.edges_for_node(e) << node
-    e
+    unless edges.first.nil?
+      e = edges.delete(edges.first)
+      graph.edges_for_node(e) << node
+      e
+    else
+      nil
+    end
   end
 end
