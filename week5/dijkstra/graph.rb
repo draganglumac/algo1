@@ -28,12 +28,17 @@ class Graph
     nodes
   end
 
-  def weight(edge)
-    edge.last
+  def length(edge)
+    edge.last if valid_edge(edge)
   end
 
   def sink(edge)
-    edge.first
+    edge.first if valid_edge(edge)
+  end
+
+  def valid_edge(edge)
+    raise InvalidEdgeException.new("Invalid edge: #{edge}") if (edge.nil? or edge.empty? or edge.size != 2)
+    true
   end
 
   def edges_for_node(n)
@@ -44,15 +49,15 @@ class Graph
     @adj_list = [nil]
     File.open(filename, 'r').each do |line|
       unless line.empty?
-        list = line.strip.split(/\s+/).map { |el| el.split(',') }
-        add_to_node(list.first.first, list[1..-1])
+        list = line.strip.split(/\s+/).map { |el| el.split(',').map { |e| e.to_i } }
+        add_to_node(list.first.first.to_i, list[1..-1])
       end
     end
   end
 
   def add_to_node(node, edges)
-      @adj_list[node] ||= []
-      @adj_list[node] += edges
+    @adj_list[node] ||= []
+    @adj_list[node] += edges
   end
 
   def to_s
