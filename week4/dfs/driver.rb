@@ -21,6 +21,11 @@ class Driver
 
     reachable_from_1 = dfs.nodes_reachable_from(graph, 1)
     pretty_print(reachable_from_1)
+
+    # graph.load('topological.txt')
+    graph.load('top2.txt')
+    topol = dfs.topological_ordering(graph)
+    p topol
   end
 
   def pretty_print(nodes)

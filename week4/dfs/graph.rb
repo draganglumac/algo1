@@ -33,6 +33,7 @@ class Graph
   end
 
   def load(filename)
+    @adj_list = [nil]
     File.open(filename, 'r').each do |line|
       unless line.empty?
         list = line.strip.split(' ').map { |el| el.to_i }
