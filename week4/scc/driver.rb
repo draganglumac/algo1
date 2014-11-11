@@ -14,36 +14,17 @@ class Driver
     # graph.load('test/small.txt')
     graph.load('test/test.txt')
     # graph.load('test/SCC.txt')
+# binding.pry
+    sccs = scc.get_SCCs graph
 
-    edges = 0
-    graph.nodes.each do |node|
-      graph.edges_for_node(node).each do |e|
-        edges += 1
-      end
-    end
-    puts "nodes = #{graph.nodes.size}"
-    puts "edges = #{edges}"
-
-    reachable_from_1 = scc.dfs(graph, 1)
-    reverse_from_1 = scc.reverse_dfs(graph, 1)
-
-    if graph.nodes.size < 1000
-      puts graph
-      pretty_print(reachable_from_1)
-      pretty_print(reverse_from_1)
-    else
-      if reverse_from_1 == reachable_from_1.reverse
-        puts 'The list is reversed'
-      end
-    end
+    p sccs
+    print_sizes_decreasing sccs
   end
 
-  def pretty_print(nodes)
-    puts ''
-    p nodes
-    puts "Number of reachable nodes = #{nodes.size}"
+  def print_sizes_decreasing(sccs)
+    sizes = sccs.map { |scc| scc.size }
+    p sizes.sort.reverse
   end
-
 end
 
 Driver.new.run
