@@ -59,7 +59,7 @@ describe Graph do
     end
   end
 
-  describe 'edges for node' do
+  describe 'edges and nodes' do
     it 'should return empty list of edges of invalid node' do
       expect(graph.edges_for_node(0)).to eq([])
       expect(graph.edges_for_node(5)).to eq([])
@@ -69,6 +69,11 @@ describe Graph do
       expect(graph.edges_for_node 1).to eq([[2, 3], [3, 3]])
       expect(graph.edges_for_node 3).to eq([[4, 50]])
       expect(graph.edges_for_node 4).to eq([])
+    end
+
+    it 'should return correct list of nodes' do
+      expect(graph.nodes).to eq([1, 2, 3, 4])
+      expect(graph.nodes.size).to eq(4)
     end
   end
 end
