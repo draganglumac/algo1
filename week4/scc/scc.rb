@@ -42,32 +42,53 @@ class SCC
   end
 
   def dfs_visit(graph, node)
-    @visited[node] = true
-    e = pluck_and_reverse_first_edge(graph, node)
-    unless e.nil?
-      until e.nil?
-        dfs_visit(graph, e) if @visited[e].nil?
-        e = pluck_and_reverse_first_edge(graph, node)
+    unless @visited[node]
+      stack = Stack.new
+      @visited[node] = true
+      stack.push node
+      until stack.empty?
+        top = stack.top
+        e = pluck_and_reverse_first_edge(graph, top)
+        if e.nil?
+          @ftime += 1
+          @ftimes[@ftime] = stack.pop
+        else
+          unless @visited[e]
+            @visited[e] = true
+            stack.push e
+          end
+        end
       end
-      @ftime += 1
-      @ftimes[@ftime] = node
     end
   end
 
   def dfs_visit_component(graph, node)
+    # p ['node', node]
     unless @visited[node]
+      stack = Stack.new
       @visited[node] = true
+      stack.push node
       @current_component << node
-      e = pluck_and_reverse_first_edge(graph, node)
-      unless e.nil?
-        until e.nil?
-          dfs_visit_component(graph, e) unless @visited[e]
-          e = pluck_and_reverse_first_edge(graph, node)
+      # p ['stack', stack.to_a]
+      until stack.empty?
+        top = stack.top
+        e = pluck_and_reverse_first_edge graph, top
+        unless e.nil?
+          unless @visited[e]
+            @current_component << e
+            @visited[e] = true
+            stack.push e
+            # p ['stack', stack.to_a]
+          end
+        else
+          stack.pop
         end
       end
+      # p ['cc', @current_component]
       @strong_components << @current_component.sort unless @current_component.empty?
       @current_component = []
     end
+    # p 'returning'
   end
 
   def pluck_and_reverse_first_edge(graph, node)
@@ -80,4 +101,5 @@ class SCC
       nil
     end
   end
+
 end
