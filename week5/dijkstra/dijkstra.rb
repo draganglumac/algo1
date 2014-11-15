@@ -15,6 +15,7 @@ class Dijkstra
     (1000000 * (t2 - t1)).to_i
   end
 
+  suuuuuuuuuuuucks
   def quick_shortest_paths(graph, node)
     t1 = Time.now
     set_up graph, node
