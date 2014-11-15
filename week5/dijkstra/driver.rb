@@ -8,18 +8,24 @@ require 'dijkstra'
 def mn_dijkstra(dijkstra, graph, trials)
   results = []
   (0..trials).each do |i|
-    results << dijkstra.compute_shortest_paths(graph, 1)
-    puts results.last if i % 100 == 0
-  end
+    result = dijkstra.compute_shortest_paths(graph, 1)
+    unless i == 0
+      results << result
+      p [i, results.last] if i % 100 == 0
+    end
+    end
   puts "Average running time for O(m*n) Dijkstra: #{results.reduce(:+) / results.size}"
 end
 
 def heap_dijkstra(dijkstra, graph, trials)
   results = []
   (0..trials).each do |i|
-    results << dijkstra.quick_shortest_paths(graph, 1)
-    puts results.last if i % 100 == 0
-  end
+    result = dijkstra.quick_shortest_paths(graph, 1)
+    unless i == 0
+      results << result
+      p [i, results.last] if i % 100 == 0
+    end
+    end
   puts "Average running time for heap Dijkstra: #{results.reduce(:+) / results.size}"
 end
 
