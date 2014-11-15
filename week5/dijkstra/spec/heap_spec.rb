@@ -5,13 +5,19 @@ require 'rspec'
 require 'heap'
 
 describe Heap do
-  let(:heap) { Heap.new }
+  let(:heap) { Heap.new { |a, b| a <=> b } }
 
   describe 'insert' do
     it 'should insert first element into root position' do
       heap.insert 3
       expect(heap.heap.first).to eq(3)
       expect(heap.heap.size).to eq(1)
+    end
+
+    describe 'empty heap' do
+      it 'should be empty intially' do
+        expect(heap.empty?).to be_truthy
+      end
     end
 
     describe 'non empty heap' do

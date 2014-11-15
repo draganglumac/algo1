@@ -3,8 +3,13 @@ require 'invariant'
 class Heap
   attr_reader :heap
 
-  def initialize
+  def initialize(&compare)
     @heap = []
+    @compare = compare
+  end
+
+  def empty?
+    @heap.empty?
   end
 
   def heapify(array)
@@ -34,7 +39,7 @@ class Heap
     unless @heap.empty?
       current = @heap.size - 1
       parent = current / 2
-      while @heap[parent] > @heap[current]
+      while @compare.call(@heap[parent], @heap[current]) > 0
         break if parent == current
         swap(current, parent)
         current /= 2
@@ -46,8 +51,8 @@ class Heap
   def bubble_down
     unless @heap.empty?
       current = 0
-      c1 = (current + 1) * 2
-      c2 = (current + 1) * 2 - 1
+      c1 = 2 * current + 1
+      c2 = 2 * current + 2
       while needs_a_swap?(current, c1, c2)
         if c2 >= @heap.size and c1 < @heap.size
           swap(current, c1)
@@ -56,7 +61,7 @@ class Heap
           swap(current, c2)
           current = c2
         else
-          if @heap[c1] < @heap[c2]
+          if @compare.call(@heap[c1], @heap[c2]) < 0
             swap(current, c1)
             current = c1
           else
@@ -64,15 +69,15 @@ class Heap
             current = c2
           end
         end
-        c1 = (current + 1) * 2
-        c2 = (current + 1) * 2 - 1
+        c1 = 2 * current + 1
+        c2 = 2 * current + 2
       end
     end
   end
 
   def needs_a_swap?(current, c1, c2)
-    (c1 < @heap.size and @heap[current] > @heap[c1]) or
-        (c2 < @heap.size and @heap[current] > @heap[c2])
+    (c1 < @heap.size and @compare.call(@heap[current], @heap[c1]) > 0) or
+        (c2 < @heap.size and @compare.call(@heap[current], @heap[c2]) > 0)
   end
 
   def swap(a, b)
@@ -83,8 +88,12 @@ class Heap
 
   def invariant
     result = true
-    (0...@heap.size).each do |i|
-      if (@heap[i % 2] > @heap[i])
+    (@heap.size...0).each do |i|
+      if (@compare.call(@heap[i % 2], @heap[i])) > 0
+        puts ''
+        puts 'Offending heap -> '
+        p @heap
+        puts "Element #{@heap[i % 2]}@#{i % 2} is greater than its child #{@heap[i]}@#{i}!"
         result = false
         break
       end
