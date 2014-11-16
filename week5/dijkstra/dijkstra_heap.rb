@@ -6,12 +6,13 @@ class DijkstraHeap
 
   def initialize(&compare)
     @heap = []
-    @priority = {}
+    @priority = []
     @compare = compare
+    @next_index = 0
   end
 
   def empty?
-    @heap.empty?
+    @heap.empty? or @next_index == 0
   end
 
   def key(e)
@@ -23,13 +24,16 @@ class DijkstraHeap
   end
 
   def heapify(array)
+    @heap = Array.new array.size
+    @priority = Array.new array.size
     array.each { |e| insert e }
     assert invariant
   end
 
   def insert(e)
-    @heap << e
-    @priority[key(e)] = @heap.size - 1
+    @heap[@next_index] = e
+    @priority[key(e)] = @next_index
+    @next_index += 1
     bubble_up
     assert invariant
   end
@@ -40,6 +44,7 @@ class DijkstraHeap
       min = @heap[0]
       @heap[0] = @heap[-1]
       @heap.delete_at(-1)
+      @next_index -= 1
       @priority[key(min)] = nil
       bubble_down
       assert invariant
@@ -57,13 +62,13 @@ class DijkstraHeap
 
   def valid_index(index)
     not index.nil? and
-        ((index >= 0 and index < @heap.size) or
-            (index >= -@heap.size and index < 0))
+        ((index >= 0 and index <= @next_index) or
+            (index >= -(@next_index + 1) and index < 0))
   end
 
   def bubble_up(index=-1)
     if index < 0
-      start = @heap.size + index
+      start = @next_index + index
     else
       start = index
     end
@@ -96,10 +101,10 @@ class DijkstraHeap
       c1 = 2 * current + 1
       c2 = 2 * current + 2
       while needs_a_swap?(current, c1, c2)
-        if c2 >= @heap.size and c1 < @heap.size
+        if c2 >= @next_index and c1 < @next_index
           swap(current, c1)
           current = c1
-        elsif c1 >= @heap.size and c2 < @heap.size
+        elsif c1 >= @next_index and c2 < @next_index
           swap(current, c2)
           current = c2
         else
@@ -118,8 +123,8 @@ class DijkstraHeap
   end
 
   def needs_a_swap?(current, c1, c2)
-    (c1 < @heap.size and @compare.call(@heap[current], @heap[c1]) > 0) or
-        (c2 < @heap.size and @compare.call(@heap[current], @heap[c2]) > 0)
+    (c1 < @next_index and @compare.call(@heap[current], @heap[c1]) > 0) or
+        (c2 < @next_index and @compare.call(@heap[current], @heap[c2]) > 0)
   end
 
   def swap(a, b)
@@ -132,14 +137,16 @@ class DijkstraHeap
 
   def invariant
     result = true
-    (@heap.size...0).each do |i|
-      if (@compare.call(@heap[i % 2], @heap[i])) > 0
-        puts ''
-        puts 'Offending heap -> '
-        p @heap
-        puts "Element #{@heap[i % 2]}@#{i % 2} is greater than its child #{@heap[i]}@#{i}!"
-        result = false
-        break
+    unless empty?
+      ((@next_index - 1)...0).each do |i|
+        if (@compare.call(@heap[i % 2], @heap[i])) > 0
+          puts ''
+          puts 'Offending heap -> '
+          p @heap
+          puts "Element #{@heap[i % 2]}@#{i % 2} is greater than its child #{@heap[i]}@#{i}!"
+          result = false
+          break
+        end
       end
     end
     result

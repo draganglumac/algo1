@@ -17,7 +17,6 @@ class Dijkstra
   end
 
   def quick_shortest_paths(graph, node)
-    t1 = Time.now
     set_up graph, node
 
     heap = DijkstraHeap.new do |a, b|
@@ -29,7 +28,7 @@ class Dijkstra
         a.first <=> b.first
       end
     end
-
+    t1 = Time.now
     heap.heapify(graph.nodes.map do |n|
                    if n == node
                      [0, n]
@@ -37,7 +36,6 @@ class Dijkstra
                      [-1, n]
                    end
                  end)
-
     until heap.empty?
       current = heap.extract_min[-1]
       unless @processed[current]
@@ -68,8 +66,8 @@ class Dijkstra
   end
 
   def compute_shortest_paths(graph, node)
-    t1 = Time.now
     set_up graph, node
+    t1 = Time.now
     @processed[node] = true
     until all_nodes_processed(graph)
       update_score_for_next_node(graph)
