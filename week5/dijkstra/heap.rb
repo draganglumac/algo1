@@ -35,16 +35,42 @@ class Heap
     min
   end
 
-  def bubble_up
+  def decrease_key(index, new_value)
+    if valid_index index
+      @heap[index] = new_value
+      bubble_up index
+    end
+  end
+
+  def valid_index(index)
+    (index >= 0 and index < @heap.size) or
+        (index >= -@heap.size and index < 0)
+  end
+
+  def bubble_up(index=-1)
+    if index < 0
+      start = @heap.size + index
+    else
+      start = index
+    end
+
     unless @heap.empty?
-      current = @heap.size - 1
-      parent = current / 2
+      current = start
+      parent = parent_of start
       while @compare.call(@heap[parent], @heap[current]) > 0
-        break if parent == current
+        break if current == 0
         swap(current, parent)
-        current /= 2
-        parent /= 2
+        current = parent
+        parent = parent_of current
       end
+    end
+  end
+
+  def parent_of(node)
+    if node % 2 == 0
+      node / 2 - 1
+    else
+      node / 2
     end
   end
 

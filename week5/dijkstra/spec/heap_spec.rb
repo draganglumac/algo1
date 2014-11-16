@@ -31,17 +31,28 @@ describe Heap do
       end
 
       it 'should insert elements so that heap property is preserved' do
-        expect(heap.heap).to eq([1, 2, 5, 3, 10, 7])
+        expect(heap.heap).to eq([1, 2, 3, 5, 10, 7])
+      end
+
+      it 'should decrease key' do
+        heap.decrease_key(6, 15)
+        expect(heap.heap).to eq([1, 2, 3, 5, 10, 7])
+
+        heap.decrease_key(0, 0)
+        expect(heap.heap).to eq([0, 2, 3, 5, 10, 7])
+
+        heap.decrease_key(4, 1)
+        expect(heap.heap).to eq([0, 1, 3, 5, 2, 7])
       end
 
       it 'should extract minimum' do
         min = heap.extract_min
         expect(min).to eq(1)
-        expect(heap.heap).to eq([2, 3, 5, 7, 10])
+        expect(heap.heap).to eq([2, 5, 3, 7, 10])
 
         min = heap.extract_min
         expect(min).to eq(2)
-        expect(heap.heap).to eq([3, 7, 5, 10])
+        expect(heap.heap).to eq([3, 5, 10, 7])
 
         min = heap.extract_min
         expect(min).to eq(3)
