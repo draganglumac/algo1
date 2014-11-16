@@ -24,7 +24,7 @@ describe Dijkstra do
     graph.load('test/medium2.txt')
     dijkstra.compute_shortest_paths(graph, 1)
     # dijkstra.quick_shortest_paths(graph, 1)
-    p dijkstra.from
-    p dijkstra.lengths
+    p ['from', dijkstra.from]
+    p ['lenghts', dijkstra.lengths]
   end
 end
