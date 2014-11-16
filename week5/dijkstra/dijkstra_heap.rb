@@ -1,15 +1,25 @@
 require 'invariant'
 
-class Heap
+class DijkstraHeap
   attr_reader :heap
+  attr_reader :priority
 
   def initialize(&compare)
     @heap = []
+    @priority = {}
     @compare = compare
   end
 
   def empty?
     @heap.empty?
+  end
+
+  def key(e)
+    e.last
+  end
+
+  def metric(e)
+    e.first
   end
 
   def heapify(array)
@@ -19,6 +29,7 @@ class Heap
 
   def insert(e)
     @heap << e
+    @priority[key(e)] = @heap.size - 1
     bubble_up
     assert invariant
   end
@@ -29,22 +40,25 @@ class Heap
       min = @heap[0]
       @heap[0] = @heap[-1]
       @heap.delete_at(-1)
+      @priority[key(min)] = nil
       bubble_down
       assert invariant
     end
     min
   end
 
-  def decrease_key(index, new_value)
+  def decrease_key(key, new_metric)
+    index = @priority[key]
     if valid_index index
-      @heap[index] = new_value
+      @heap[index] = [new_metric, key]
       bubble_up index
     end
   end
 
   def valid_index(index)
-    (index >= 0 and index < @heap.size) or
-        (index >= -@heap.size and index < 0)
+    not index.nil? and
+        ((index >= 0 and index < @heap.size) or
+            (index >= -@heap.size and index < 0))
   end
 
   def bubble_up(index=-1)
@@ -67,7 +81,9 @@ class Heap
   end
 
   def parent_of(node)
-    if node % 2 == 0
+    if node == 0
+      node
+    elsif node % 2 == 0
       node / 2 - 1
     else
       node / 2
@@ -109,7 +125,9 @@ class Heap
   def swap(a, b)
     temp = @heap[a]
     @heap[a] = @heap[b]
+    @priority[key(@heap[a])] = a
     @heap[b] = temp
+    @priority[key(temp)] = b
   end
 
   def invariant

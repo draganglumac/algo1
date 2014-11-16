@@ -35,7 +35,7 @@ graph.load('test/dijkstraData.txt')
 dijkstra = Dijkstra.new
 
 mn_dijkstra dijkstra, graph, 1000
-heap_dijkstra dijkstra, graph, 1000
+# heap_dijkstra dijkstra, graph, 1000
 
 distances = [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]
 result = nil

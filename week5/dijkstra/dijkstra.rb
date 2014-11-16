@@ -1,5 +1,5 @@
 require 'graph'
-require 'heap'
+require 'dijkstra_heap'
 
 class Dijkstra
   attr_reader :from
@@ -8,6 +8,7 @@ class Dijkstra
   def initialize
     @from = []
     @lengths = []
+    @priority = {}
     @processed = {}
   end
 
@@ -15,12 +16,28 @@ class Dijkstra
     (1000000 * (t2 - t1)).to_i
   end
 
-  suuuuuuuuuuuucks
   def quick_shortest_paths(graph, node)
     t1 = Time.now
     set_up graph, node
-    heap = Heap.new { |a, b| a.first <=> b.first }
-    heap.insert [0, node]
+
+    heap = DijkstraHeap.new do |a, b|
+      if a.first < 0
+        -1
+      elsif b.first < 0
+        1
+      else
+        a.first <=> b.first
+      end
+    end
+
+    heap.heapify graph.nodes.map do |n|
+      if n == node
+        [0, node]
+      else
+        [-1, node]
+      end
+    end
+
     until heap.empty?
       current = heap.extract_min[-1]
       unless @processed[current]
@@ -28,7 +45,7 @@ class Dijkstra
         curr_edges.each do |e|
           sink = graph.sink e
           len = graph.length e
-          relax current, sink, len, heap
+          relax current, sink, len, heap, heap_pos
         end
       end
       @processed[current] = true
@@ -37,12 +54,16 @@ class Dijkstra
     duration_in_nanos t1, t2
   end
 
-  def relax(from, to, len, heap)
+  def relax(from, to, len, heap, heap_pos)
     path_len = @lengths[from] + len
     if @lengths[to].nil? or @lengths[to] > path_len
       @lengths[to] = path_len
       @from[to] = from
-      heap.insert [path_len, to]
+      if @lengths[to] > path_len
+        heap_pos[to] = heap.decrease_key heap_pos[to], [path_len, to]
+      else
+        heap_pos[to] = heap.insert [path_len, to]
+      end
     end
   end
 
