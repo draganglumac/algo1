@@ -1,24 +1,35 @@
 class TwoSum
 
   def set_array(array)
+    reset
     @array = array
-    @indicators = {}
     @array.each { |e| @indicators[e] = true }
   end
 
-  def load_array_from_file(file)
-    array = []
+  def load_distinct_from_file(file)
+    reset
     File.open(file, 'r').each do |line|
       n = line.strip.to_i
       if n == 0
         if line.strip == '0'
-          array << n
+          add_number(n)
         end
       else
-        array << n
+        add_number(n)
       end
     end
-    set_array array
+  end
+
+  def reset
+    @array = []
+    @indicators = {}
+  end
+
+  def add_number(n)
+    unless @indicators[n]
+      @array << n
+      @indicators[n] = true
+    end
   end
 
   def pairs_for_sum(sum)
@@ -35,17 +46,29 @@ class TwoSum
 
   def distinct_sums(interval)
     result = {}
-    # fast_distinct_sums(interval, result)
-    hash_distinct_sums(interval, result)
+    fast_distinct_sums(interval, result)
+    # hash_distinct_sums(interval, result)
     # two_loops_distinct_sums(interval, result)
     result.keys.sort
   end
 
   def fast_distinct_sums(interval, result)
     array = @array.sort
-    max_j = array.size - 1
-    min_i = 0
-
+    right = array.size - 1
+    left = 0
+    while left <= right
+      while (array[left] + array[right]) > interval.last
+        break if left > right
+        right -= 1
+      end
+      j = right
+      until (array[left] + array[j]) < interval.first
+        break if left > j
+        result[array[left] + array[j]] = true unless array[left] == array[j]
+        j -= 1
+      end
+      left += 1
+    end
   end
 
   def hash_distinct_sums(interval, result)
