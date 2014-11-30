@@ -22,25 +22,32 @@
 #include <vector>
 #include <list>
 #include <fstream>
+#include <exception>
+
+struct NotImplementedException : public std::exception {
+	NotImplementedException() throw();
+	virtual const char* what() const throw();
+};
 
 class Graph
 {
-	std::vector<std::list> adjacent;
-
-	void add_node(int node);
-	void add_edge_to_node(int edge);
-
 	public:
 	Graph();
 	~Graph();
-
 	void load_from_file(char **path);
 
-	int[] nodes();
-	std::list& edges_for_node(int node);
+	int* nodes(int& size);
+	const std::list<int>& edges_for_node(int node);
 
-	int[] bfs();
-	int[] dfs();	
+	int* bfs(int& size);
+	int* dfs(int& size);	
+	
+	private:
+	std::vector<std::list<int> > adj;
+
+	void ensure_node(int node); 
+	bool is_edge_in_graph(int src, int sink);
+	void add_edge_to_node(int node, int edge);
 };
 
 #endif
