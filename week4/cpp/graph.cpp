@@ -49,6 +49,10 @@ void Graph::load_from_file(char **path) {
 	throw new NotImplementedException();
 }
 int* Graph::nodes(int& size) {
+	if (adj.size() == 0) {
+		size = 0;
+		return NULL;
+	}
 	int* vertices = new int[adj.size()];
 	size = adj.size();
 	for (int i = 0; i < size; i++) {

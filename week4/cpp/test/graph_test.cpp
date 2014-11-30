@@ -24,5 +24,5 @@ TEST(Graph, empty_graph)
 	int size;
 	int *nodes = g.nodes(size); 
 	LONGS_EQUAL(0, size);
-	CHECK_EQUAL(nodes, NULL);
+	CHECK(nodes == NULL);
 }
