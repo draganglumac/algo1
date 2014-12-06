@@ -26,6 +26,12 @@ const char* NotImplementedException::what() const throw() {
 	return "Method not implemented.";
 }
 
+InvalidNodeException::InvalidNodeException() throw() {
+}
+const char* InvalidNodeException::what() const throw() {
+	return "This is not a valid node for this graph.";
+}
+
 Graph::Graph() {
 }
 Graph::~Graph() {
@@ -45,24 +51,20 @@ bool Graph::is_edge_in_graph(int src, int sink) {
 	ensure_node(src);
 	return (find(adj[src].begin(), adj[src].end(), sink) != adj[src].end());	
 }
-void Graph::load_from_file(char **path) {
-	throw new NotImplementedException();
+const int Graph::num_nodes() const {
+	return adj.size();	
 }
-int* Graph::nodes(int& size) {
-	if (adj.size() == 0) {
-		size = 0;
-		return NULL;
+const list<int>& Graph::edges_for_node(int node) const {
+	if (node < num_nodes()) {
+		return adj[node];
 	}
-	int* vertices = new int[adj.size()];
-	size = adj.size();
-	for (int i = 0; i < size; i++) {
-		vertices[i] = i;
+	else {
+		throw new InvalidNodeException();
 	}
-	return vertices;	
 }
-int* Graph::bfs(int& size) {
-	return NULL;	
+void Graph::bfs(vector<int>& order) {
+	// ToDo
 }
-int* Graph::dfs(int& size) {
-	return NULL;
+void Graph::dfs(vector<int>& order) {
+	// ToDo
 }

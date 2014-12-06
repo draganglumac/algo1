@@ -21,11 +21,15 @@
 
 #include <vector>
 #include <list>
-#include <fstream>
 #include <exception>
 
 struct NotImplementedException : public std::exception {
 	NotImplementedException() throw();
+	virtual const char* what() const throw();
+};
+
+struct InvalidNodeException : public std::exception {
+	InvalidNodeException() throw();
 	virtual const char* what() const throw();
 };
 
@@ -34,13 +38,12 @@ class Graph
 	public:
 	Graph();
 	~Graph();
-	void load_from_file(char **path);
+	
+	const int num_nodes() const;
+	const std::list<int>& edges_for_node(int node) const;
 
-	int* nodes(int& size);
-	const std::list<int>& edges_for_node(int node);
-
-	int* bfs(int& size);
-	int* dfs(int& size);	
+	void bfs(std::vector<int>& order);
+	void dfs(std::vector<int>& order);	
 	
 	private:
 	std::vector<std::list<int> > adj;

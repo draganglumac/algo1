@@ -18,8 +18,7 @@
 #include "graph.h"
 #include "CppUnitLite/TestHarness.h"
 
-TEST(Graph, empty_graph)
-{
+TEST(Graph, empty_graph) {
 	Graph g;
 	int size;
 	int *nodes = g.nodes(size); 
