@@ -39,9 +39,12 @@ class Graph
 	Graph();
 	~Graph();
 	
-	const int num_nodes() const;
-	const std::list<int>& edges_for_node(int node) const;
+	int num_nodes();
+	std::list<int>& edges_for_node(int node);
 
+	void add_node(int node);
+	void add_edge_to_node(int node, int edge);
+	
 	void bfs(std::vector<int>& order);
 	void dfs(std::vector<int>& order);	
 	
@@ -50,7 +53,6 @@ class Graph
 
 	void ensure_node(int node); 
 	bool is_edge_in_graph(int src, int sink);
-	void add_edge_to_node(int node, int edge);
 };
 
 #endif

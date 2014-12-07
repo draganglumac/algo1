@@ -20,6 +20,8 @@
 
 using namespace std;
 
+// *** Exceptions ***
+
 NotImplementedException::NotImplementedException() throw() {
 }
 const char* NotImplementedException::what() const throw() {
@@ -32,14 +34,19 @@ const char* InvalidNodeException::what() const throw() {
 	return "This is not a valid node for this graph.";
 }
 
+// *** Graph class implementation ***
+
 Graph::Graph() {
 }
 Graph::~Graph() {
 }
 void Graph::ensure_node(int node) {
-	if (node > adj.size()) {
+	if (node >= adj.size()) {
 		adj.resize(node + 1);
 	}
+}
+void Graph::add_node(int node) {
+	ensure_node(node);
 }
 void Graph::add_edge_to_node(int node, int edge) {
 	ensure_node(node);
@@ -51,10 +58,10 @@ bool Graph::is_edge_in_graph(int src, int sink) {
 	ensure_node(src);
 	return (find(adj[src].begin(), adj[src].end(), sink) != adj[src].end());	
 }
-const int Graph::num_nodes() const {
+int Graph::num_nodes() {
 	return adj.size();	
 }
-const list<int>& Graph::edges_for_node(int node) const {
+list<int>& Graph::edges_for_node(int node) {
 	if (node < num_nodes()) {
 		return adj[node];
 	}
