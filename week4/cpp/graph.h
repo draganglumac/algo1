@@ -23,12 +23,16 @@
 #include <list>
 #include <exception>
 
-struct NotImplementedException : public std::exception {
+struct NotImplementedException
+: public std::exception
+{
 	NotImplementedException() throw();
 	virtual const char* what() const throw();
 };
 
-struct InvalidNodeException : public std::exception {
+struct InvalidNodeException
+: public std::exception
+{
 	InvalidNodeException() throw();
 	virtual const char* what() const throw();
 };
@@ -36,23 +40,23 @@ struct InvalidNodeException : public std::exception {
 class Graph
 {
 	public:
-	Graph();
-	~Graph();
-	
-	int num_nodes();
-	std::list<int>& edges_for_node(int node);
+		Graph();
+		~Graph();
 
-	void add_node(int node);
-	void add_edge_to_node(int node, int edge);
-	
-	void bfs(std::vector<int>& order);
-	void dfs(std::vector<int>& order);	
-	
+		int num_nodes();
+		std::list<int>& edges_for_node(int node);
+
+		void add_node(int node);
+		void add_edge_to_node(int node, int edge);
+
+		void bfs(std::vector<int>& order);
+		void dfs(std::vector<int>& order);	
+
 	private:
-	std::vector<std::list<int> > adj;
+		std::vector<std::list<int> > adj;
 
-	void ensure_node(int node); 
-	bool is_edge_in_graph(int src, int sink);
+		void ensure_node(int node); 
+		bool is_edge_in_graph(int src, int sink);
 };
 
 #endif

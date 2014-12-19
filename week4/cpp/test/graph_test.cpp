@@ -20,18 +20,21 @@
 
 using namespace std;
 
-TEST(Graph, empty_graph) {
+TEST(Graph, empty_graph)
+{
 	Graph g;
 	LONGS_EQUAL(0, g.num_nodes());
 }
-TEST(Graph, single_node) {
+TEST(Graph, single_node)
+{
 	Graph g;
 	g.add_node(0);
 
 	LONGS_EQUAL(1, g.num_nodes());
 	LONGS_EQUAL(0, g.edges_for_node(0).size());
 }
-TEST(Graph, disconnected_nodes) {
+TEST(Graph, disconnected_nodes)
+{
 	Graph g;
 	g.add_node(3);
 
@@ -40,7 +43,8 @@ TEST(Graph, disconnected_nodes) {
 		LONGS_EQUAL(0, g.edges_for_node(i).size());
 	}
 }
-TEST(Graph, undirected_node_one_edge) {
+TEST(Graph, undirected_node_one_edge)
+{
 	Graph g;
 	g.add_node(1);
 	g.add_edge_to_node(0, 1);
@@ -53,7 +57,8 @@ TEST(Graph, undirected_node_one_edge) {
 
 	LONGS_EQUAL(0, g.edges_for_node(1).size());
 }
-TEST(Graph, directed_node_one_edge) {
+TEST(Graph, directed_node_one_edge)
+{
 	Graph g;
 	g.add_node(1);
 	g.add_edge_to_node(0, 1);
@@ -69,7 +74,8 @@ TEST(Graph, directed_node_one_edge) {
 	LONGS_EQUAL(1, edges.size());
 	LONGS_EQUAL(0, *edges.begin());	
 }
-TEST(Graph, directed_graph) {
+TEST(Graph, directed_graph)
+{
 	Graph g;
 	g.add_node(2);
 	g.add_edge_to_node(0, 1);
@@ -87,7 +93,8 @@ TEST(Graph, directed_graph) {
 		LONGS_EQUAL(i, *it);
 	}
 }
-TEST(Graph, undirected_graph) {
+TEST(Graph, undirected_graph)
+{
 	Graph g;
 	g.add_node(2);
 	g.add_edge_to_node(0, 1);
@@ -112,4 +119,12 @@ TEST(Graph, undirected_graph) {
 	edges = g.edges_for_node(2);
 	LONGS_EQUAL(0, *edges.begin());
 	LONGS_EQUAL(1, *(++edges.begin()));
-}	
+}
+TEST(Graph, bfs)
+{
+	LONGS_EQUAL(0, 1);
+}
+TEST(Graph, dfs)
+{
+	LONGS_EQUAL(0, 1);
+}
