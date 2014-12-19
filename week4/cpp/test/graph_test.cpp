@@ -120,11 +120,50 @@ TEST(Graph, undirected_graph)
 	LONGS_EQUAL(0, *edges.begin());
 	LONGS_EQUAL(1, *(++edges.begin()));
 }
+void construct_graph(Graph &g)
+{
+	g.add_node(7);
+	g.add_edge_to_node(0, 1);
+	g.add_edge_to_node(0, 2);
+	g.add_edge_to_node(0, 3);
+	g.add_edge_to_node(1, 4);
+	g.add_edge_to_node(2, 5);
+	g.add_edge_to_node(3, 6);
+	g.add_edge_to_node(4, 7);
+	g.add_edge_to_node(5, 7);
+	g.add_edge_to_node(6, 7);
+}
 TEST(Graph, bfs)
 {
-	LONGS_EQUAL(0, 1);
+	Graph g;
+	construct_graph(g);
+	
+	vector<int> v;
+	g.bfs(0, v);
+
+	LONGS_EQUAL(v[0], 0);
+	LONGS_EQUAL(v[1], 1);
+	LONGS_EQUAL(v[2], 2);
+	LONGS_EQUAL(v[3], 3);
+	LONGS_EQUAL(v[4], 4);
+	LONGS_EQUAL(v[5], 5);
+	LONGS_EQUAL(v[6], 6);
+	LONGS_EQUAL(v[7], 7);
 }
 TEST(Graph, dfs)
 {
-	LONGS_EQUAL(0, 1);
+	Graph g;
+	construct_graph(g);
+	
+	vector<int> v;
+	g.dfs(0, v);
+
+	LONGS_EQUAL(v[0], 0);
+	LONGS_EQUAL(v[1], 1);
+	LONGS_EQUAL(v[2], 4);
+	LONGS_EQUAL(v[3], 7);
+	LONGS_EQUAL(v[4], 2);
+	LONGS_EQUAL(v[5], 5);
+	LONGS_EQUAL(v[6], 3);
+	LONGS_EQUAL(v[7], 6);
 }

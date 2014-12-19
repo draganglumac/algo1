@@ -49,8 +49,8 @@ class Graph
 		void add_node(int node);
 		void add_edge_to_node(int node, int edge);
 
-		void bfs(std::vector<int>& order);
-		void dfs(std::vector<int>& order);	
+		void bfs(int start_node, std::vector<int>& order);
+		void dfs(int start_node, std::vector<int>& order);	
 
 	private:
 		std::vector<std::list<int> > adj;

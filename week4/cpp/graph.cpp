@@ -76,11 +76,11 @@ list<int>& Graph::edges_for_node(int node)
 		throw new InvalidNodeException();
 	}
 }
-void Graph::bfs(vector<int>& order)
+void Graph::bfs(int start_node, vector<int>& order)
 {
 	// ToDo
 }
-void Graph::dfs(vector<int>& order)
+void Graph::dfs(int start_node, vector<int>& order)
 {
 	// ToDo
 }
