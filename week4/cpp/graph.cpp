@@ -85,12 +85,31 @@ void Graph::dfs(int start_node, vector<int>& order) {
 		if(!visited[next]) {
 			visited[next] = true;
 			order.push_back(next);
-			for(list<int>::iterator it=adj[next].begin(); it != adj[next].end(); it++) {
+			for(list<int>::iterator it = adj[next].begin(); it != adj[next].end(); it++) {
 				depth_queue.push(*it);
 			}
 		}
 	}
 }
 void Graph::bfs(int start_node, vector<int>& order) {
-	// ToDo
+	vector<bool> visited(adj.size());
+	stack<int> breadth_stack;
+	int next;
+
+	breadth_stack.push(start_node);
+	while(!breadth_stack.size() != 0) {
+		next = breadth_stack.top();
+		if(!visited[next]) {
+			visited[next] = true;
+			order.push_back(next);
+		}
+		while(list<int>::iterator it = adj[next].begin(); it != adj[next].end(); it++) {
+			if(!visited[*it]) {
+				breadth_stack.push(*it);
+				visited[*it] = true;
+				order.push_back(*it);
+			}
+		}
+		breadth_stack.pop();
+	}
 }

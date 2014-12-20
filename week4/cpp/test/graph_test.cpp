@@ -159,20 +159,29 @@ TEST(Graph, dfs)
 	LONGS_EQUAL(v[1], 4);
 	LONGS_EQUAL(v[2], 7);
 }
-//TEST(Graph, bfs)
-//{
-//	Graph g;
-//	construct_graph(g);
-//	
-//	vector<int> v;
-//	g.bfs(0, v);
-//
-//	LONGS_EQUAL(v[0], 0);
-//	LONGS_EQUAL(v[1], 1);
-//	LONGS_EQUAL(v[2], 4);
-//	LONGS_EQUAL(v[3], 7);
-//	LONGS_EQUAL(v[4], 2);
-//	LONGS_EQUAL(v[5], 5);
-//	LONGS_EQUAL(v[6], 3);
-//	LONGS_EQUAL(v[7], 6);
-//}
+TEST(Graph, bfs)
+{
+	Graph g;
+	construct_graph(g);
+	
+	vector<int> v;
+	g.bfs(0, v);
+
+	LONGS_EQUAL(v.size(), 8);
+	LONGS_EQUAL(v[0], 0);
+	LONGS_EQUAL(v[1], 1);
+	LONGS_EQUAL(v[2], 4);
+	LONGS_EQUAL(v[3], 7);
+	LONGS_EQUAL(v[4], 2);
+	LONGS_EQUAL(v[5], 5);
+	LONGS_EQUAL(v[6], 3);
+	LONGS_EQUAL(v[7], 6);
+
+	v.clear();
+	g.bfs(1, v);
+
+	LONGS_EQUAL(v.size(), 3);
+	LONGS_EQUAL(v[0], 1);
+	LONGS_EQUAL(v[1], 4);
+	LONGS_EQUAL(v[2], 7);
+}
