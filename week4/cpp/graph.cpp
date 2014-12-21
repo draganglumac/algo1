@@ -52,10 +52,10 @@ void Graph::ensure_node(int node) {
 void Graph::add_node(int node) {
 	ensure_node(node);
 }
-void Graph::add_edge(int node, int edge) {
-	ensure_node(node);
-	if (edge != node && !is_edge_in_graph(node, edge)) {
-		adj[node].push_back(edge);
+void Graph::add_edge(int src, int sink) {
+	ensure_node(src);
+	if (sink != src && !is_edge_in_graph(src, sink)) {
+		adj[src].push_back(sink);
 	}
 }
 bool Graph::is_edge_in_graph(int src, int sink) {
