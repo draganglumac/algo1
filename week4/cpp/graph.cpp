@@ -73,7 +73,7 @@ list<int>& Graph::edges_for_node(int node) {
 		throw new InvalidNodeException();
 	}
 }
-void Graph::dfs(int start_node, vector<int>& order) {
+void Graph::bfs(int start_node, vector<int>& order) {
 	vector<bool> visited(adj.size());
 	queue<int> depth_queue;
 	int next;
@@ -82,34 +82,38 @@ void Graph::dfs(int start_node, vector<int>& order) {
 	while(depth_queue.size() != 0) {
 		next = depth_queue.front(); 
 		depth_queue.pop();
-		if(!visited[next]) {
+		if (!visited[next]) {
 			visited[next] = true;
 			order.push_back(next);
-			for(list<int>::iterator it = adj[next].begin(); it != adj[next].end(); it++) {
+			for (list<int>::iterator it = adj[next].begin(); it != adj[next].end(); it++) {
 				depth_queue.push(*it);
 			}
 		}
 	}
 }
-void Graph::bfs(int start_node, vector<int>& order) {
+void Graph::dfs(int start_node, vector<int>& order) {
 	vector<bool> visited(adj.size());
 	stack<int> breadth_stack;
 	int next;
 
 	breadth_stack.push(start_node);
-	while(!breadth_stack.size() != 0) {
+	while(breadth_stack.size() != 0) {	
 		next = breadth_stack.top();
-		if(!visited[next]) {
+		if (!visited[next]) {
 			visited[next] = true;
 			order.push_back(next);
 		}
-		while(list<int>::iterator it = adj[next].begin(); it != adj[next].end(); it++) {
-			if(!visited[*it]) {
+		list<int>::iterator it;
+		for (it = adj[next].begin(); it != adj[next].end(); it++) {
+			if (!visited[*it]) {
 				breadth_stack.push(*it);
 				visited[*it] = true;
 				order.push_back(*it);
+				break;
 			}
 		}
-		breadth_stack.pop();
+		if (it == adj[next].end()) {
+			breadth_stack.pop();
+		}
 	}
 }
