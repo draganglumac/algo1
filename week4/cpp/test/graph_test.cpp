@@ -47,7 +47,7 @@ TEST(Graph, undirected_node_one_edge)
 {
 	Graph g;
 	g.add_node(1);
-	g.add_edge_to_node(0, 1);
+	g.add_edge(0, 1);
 
 	LONGS_EQUAL(2, g.num_nodes());
 
@@ -61,8 +61,8 @@ TEST(Graph, directed_node_one_edge)
 {
 	Graph g;
 	g.add_node(1);
-	g.add_edge_to_node(0, 1);
-	g.add_edge_to_node(1, 0);
+	g.add_edge(0, 1);
+	g.add_edge(1, 0);
 
 	LONGS_EQUAL(2, g.num_nodes());
 	
@@ -78,9 +78,9 @@ TEST(Graph, directed_graph)
 {
 	Graph g;
 	g.add_node(2);
-	g.add_edge_to_node(0, 1);
-	g.add_edge_to_node(0, 2);
-	g.add_edge_to_node(1, 2);
+	g.add_edge(0, 1);
+	g.add_edge(0, 2);
+	g.add_edge(1, 2);
 
 	LONGS_EQUAL(2, g.edges_for_node(0).size());
 	LONGS_EQUAL(1, g.edges_for_node(1).size());
@@ -97,12 +97,12 @@ TEST(Graph, undirected_graph)
 {
 	Graph g;
 	g.add_node(2);
-	g.add_edge_to_node(0, 1);
-	g.add_edge_to_node(0, 2);
-	g.add_edge_to_node(1, 0);
-	g.add_edge_to_node(1, 2);
-	g.add_edge_to_node(2, 0);
-	g.add_edge_to_node(2, 1);
+	g.add_edge(0, 1);
+	g.add_edge(0, 2);
+	g.add_edge(1, 0);
+	g.add_edge(1, 2);
+	g.add_edge(2, 0);
+	g.add_edge(2, 1);
 
 	LONGS_EQUAL(2, g.edges_for_node(0).size());
 	LONGS_EQUAL(2, g.edges_for_node(1).size());
@@ -123,36 +123,36 @@ TEST(Graph, undirected_graph)
 void construct_graph(Graph &g)
 {
 	g.add_node(7);
-	g.add_edge_to_node(0, 1);
-	g.add_edge_to_node(0, 2);
-	g.add_edge_to_node(0, 3);
-	g.add_edge_to_node(1, 4);
-	g.add_edge_to_node(2, 5);
-	g.add_edge_to_node(3, 6);
-	g.add_edge_to_node(4, 7);
-	g.add_edge_to_node(5, 7);
-	g.add_edge_to_node(6, 7);
+	g.add_edge(0, 1);
+	g.add_edge(0, 2);
+	g.add_edge(0, 3);
+	g.add_edge(1, 4);
+	g.add_edge(2, 5);
+	g.add_edge(3, 6);
+	g.add_edge(4, 7);
+	g.add_edge(5, 7);
+	g.add_edge(6, 7);
 }
 void construct_another_graph(Graph &g) {
 	g.add_node(6);
-	g.add_edge_to_node(0, 1);
-	g.add_edge_to_node(0, 3);
-	g.add_edge_to_node(0, 5);
-	g.add_edge_to_node(1, 2);
-	g.add_edge_to_node(1, 3);
-	g.add_edge_to_node(2, 4);
-	g.add_edge_to_node(3, 5);
-	g.add_edge_to_node(4, 3);
-	g.add_edge_to_node(4, 6);
-	g.add_edge_to_node(5, 6);
+	g.add_edge(0, 1);
+	g.add_edge(0, 3);
+	g.add_edge(0, 5);
+	g.add_edge(1, 2);
+	g.add_edge(1, 3);
+	g.add_edge(2, 4);
+	g.add_edge(3, 5);
+	g.add_edge(4, 3);
+	g.add_edge(4, 6);
+	g.add_edge(5, 6);
 }
 void construct_cycle(Graph &g) {
 	g.add_node(4);
-	g.add_edge_to_node(0, 1);
-	g.add_edge_to_node(1, 2);
-	g.add_edge_to_node(2, 3);
-	g.add_edge_to_node(2, 4);
-	g.add_edge_to_node(3, 1);
+	g.add_edge(0, 1);
+	g.add_edge(1, 2);
+	g.add_edge(2, 3);
+	g.add_edge(2, 4);
+	g.add_edge(3, 1);
 }
 TEST(Graph, bfs)
 {

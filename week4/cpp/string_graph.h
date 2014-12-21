@@ -32,14 +32,14 @@ class StringGraph
 		StringGraph();
 		~StringGraph();
 
-		void add_nodes(std::vector<std::string>& nodes);
-		void add_edge_to_node(std::string node, std::string edge);	
+		void add_nodes(const std::vector<std::string>& node_names);
+		void add_edge(std::string src, std::string sink);	
 		
 		void bfs(std::vector<std::string>& order);
 		void dfs(std::vector<std::string>& order);
 
 	private:
-		std::vector<std::string> nodes
+		std::vector<std::string> nodes;
 		std::vector<const std::string, int> names;
 };
 

@@ -47,7 +47,7 @@ class Graph
 		std::list<int>& edges_for_node(int node);
 
 		void add_node(int node);
-		void add_edge_to_node(int node, int edge);
+		void add_edge(int node, int edge);
 
 		void bfs(int start_node, std::vector<int>& order);
 		void dfs(int start_node, std::vector<int>& order);	
